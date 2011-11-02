@@ -4,24 +4,22 @@ import XMonad.Config.Gnome
 import XMonad.Util.EZConfig
 import qualified XMonad.StackSet as W
 
+import XMonad.Layout.IM
+import Data.Ratio ((%))
+import XMonad.Layout.Grid
+import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Hooks.ManageDocks (avoidStruts)
+
 -- defaults on which we build
 -- use e.g. defaultConfig or gnomeConfig
 baseConf = gnomeConfig
 
-
--- DISPLAY
--- replace the bright red border with a more stylish colour
-myBorderWidth = 2
-myNormalBorderColor = "#202030"
-myFocusedBorderColor = "#A0A0D0"
-
-
 -- WORKSPACES
 
-myWorkspaces = ["1:emacs","2:terminal","3:eclipse","4:eclipse-2","5:firefox","6:chrome","7:mail","8:pidgin","9:gitk","0","-","="]
+myWorkspaces = ["1:emacs","2:terminal","3:eclipse","4:eclipse-2","5:firefox","6:chrome","7:mail","8:pidgin","9:gitk","0:misc","-","="]
 isFullscreen = (== "fullscreen")
 
-myManageHook :: ManageHook
+-- myManageHook :: ManageHook
 myManageHook = composeAll
                  -- Don't tile GNOME Do
                [ resource  =? "Do"   --> doIgnore
@@ -32,8 +30,28 @@ myManageHook = composeAll
                , className =? "Thunderbird" --> doShift "7:mail"
                , className =? "Pidgin" --> doShift "8:pidgin"
                , className =? "Gitk" --> doShift "9:gitk"
+               , className =? "Xmessage"  --> doFloat
                ]
 
+
+-- LAYOUTS
+
+-- basicLayout = Tall nmaster delta ratio where
+--     nmaster = 1
+--     delta   = 3/100
+--     ratio   = 1/2
+-- tallLayout = named "tall" $ basicLayout
+-- wideLayout = named "wide" $ Mirror basicLayout
+-- singleLayout = named "single" $ avoidStruts $ noBorders Full
+pidginLayout = withIM ratio roster chatLayout where
+    chatLayout      = Grid
+    ratio           = (1 % 6)
+    roster          = (Role "buddy_list")
+myLayoutHook =  avoidStruts $ onWorkspace "8:pidgin" pidginLayout $ normal where
+--     normal     = tallLayout ||| wideLayout ||| singleLayout
+  normal = Full
+--     pidgin         = onWorkspace "8:pidgin" pidginLayout 
+    
 
 -- KEYBINDINGS
 
@@ -68,8 +86,6 @@ main = xmonad $ baseConf
                            , modMask     = mod4Mask
                            , focusFollowsMouse = False
                            , workspaces = myWorkspaces
-                           , borderWidth = myBorderWidth
-                           , normalBorderColor = myNormalBorderColor
-                           , focusedBorderColor = myFocusedBorderColor
+                           , layoutHook = myLayoutHook
                            }
                            `additionalKeysP` myKeys
