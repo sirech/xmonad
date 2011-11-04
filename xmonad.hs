@@ -7,8 +7,10 @@ import qualified XMonad.StackSet as W
 import XMonad.Layout.IM
 import Data.Ratio ((%))
 import XMonad.Layout.Grid
+import XMonad.Layout.Tabbed
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Hooks.ManageDocks (avoidStruts)
+import XMonad.Actions.CopyWindow
 
 -- defaults on which we build
 -- use e.g. defaultConfig or gnomeConfig
@@ -16,7 +18,10 @@ baseConf = gnomeConfig
 
 -- WORKSPACES
 
-myWorkspaces = ["1:emacs","2:terminal","3:eclipse","4:eclipse-2","5:firefox","6:chrome","7:mail","8:pidgin","9:gitk","0:misc","-","="]
+ws_eclipse = "3:eclipse"
+ws_im = "8:pidgin"
+
+myWorkspaces = ["1:emacs","2:terminal",ws_eclipse,"4:eclipse-2","5:firefox","6:chrome","7:mail",ws_im,"9:gitk","0:misc","-","="]
 isFullscreen = (== "fullscreen")
 
 -- myManageHook :: ManageHook
@@ -25,10 +30,11 @@ myManageHook = composeAll
                [ resource  =? "Do"   --> doIgnore
                , className =? "Emacs" --> doShift "1:emacs"
                , resource  =? "gnome-terminal" --> doShift "2:terminal"
+               , className =? "Eclipse" --> doShift ws_eclipse
                , className =? "Firefox" --> doShift "5:firefox"
                , className =? "Google-chrome" --> doShift "6:chrome"
                , className =? "Thunderbird" --> doShift "7:mail"
-               , className =? "Pidgin" --> doShift "8:pidgin"
+               , className =? "Pidgin" --> doShift ws_im
                , className =? "Gitk" --> doShift "9:gitk"
                , className =? "Xmessage"  --> doFloat
                ]
@@ -44,13 +50,14 @@ myManageHook = composeAll
 -- wideLayout = named "wide" $ Mirror basicLayout
 -- singleLayout = named "single" $ avoidStruts $ noBorders Full
 pidginLayout = withIM ratio roster chatLayout where
-    chatLayout      = Grid
+    chatLayout      = Grid ||| simpleTabbed
     ratio           = (1 % 6)
     roster          = (Role "buddy_list")
-myLayoutHook =  avoidStruts $ onWorkspace "8:pidgin" pidginLayout $ normal where
---     normal     = tallLayout ||| wideLayout ||| singleLayout
-  normal = Full
---     pidgin         = onWorkspace "8:pidgin" pidginLayout 
+myLayoutHook =  avoidStruts $ eclipse $ pidgin $ normal 
+  where
+    normal = Full           
+    eclipse = onWorkspace ws_eclipse Full
+    pidgin = onWorkspace ws_im pidginLayout 
     
 
 -- KEYBINDINGS
@@ -74,9 +81,9 @@ myKeys =
   , (win "S-<Left>", shiftToPrev)
   , (win "S-<Right>", shiftToNext)
   ]
-  ++
-  [ (alt k, windows (W.view space))
-  | space <- myWorkspaces, let k = [head space]]
+  -- ++
+  -- [ (alt k, windows (W.view space))
+  -- | space <- myWorkspaces, let k = [head space]]
 
 
 main :: IO ()
