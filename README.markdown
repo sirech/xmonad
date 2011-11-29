@@ -1,4 +1,11 @@
-# XMonad
+# XMonad Configuration
+
+This is intended as a configuration for _XMonad_ for a development
+machine. It is intended to support Eclipse, Emacs and a Terminal
+running tmux, as well as mail. Some keys are remapped to use the
+windows key when possible.
+
+## XMonad
 
 [XMonad](http://xmonad.org) is a window tiling manager. This means
 that windows are automatically resized and moved for you.
