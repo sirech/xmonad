@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=XMonad GNOME
+Comment=This session logs you into GNOME with the traditional panel
+Exec=gnome-session --session=xmonad-gnome
+TryExec=gnome-session
+Icon=
+Type=Application
+X-Ubuntu-Gettext-Domain=gnome-session-3.0

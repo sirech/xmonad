@@ -10,18 +10,22 @@ windows key when possible.
 [XMonad](http://xmonad.org) is a window tiling manager. This means
 that windows are automatically resized and moved for you.
 
-## GNOME and XMonad
+## Installing XMonad
 
-XMonad can be used to replace the default window manager in GNOME
-(metacity). The following steps are needed, assuming the path to this repository is MONAD:
+Assuming the path to this repository is _MONAD_:
 
-This process
 1. Grab _xmonad_: `sudo apt-get install xmonad`.
 
-2. Link the start config: `sudo ln -s MONAD/xmonad.desktop /usr/share/applications`
+2. Link the config: `mkdir ~/.xmonad && ln -s MONAD/xmonad.hs
+~/.xmonad`
 
-3. Link the config: `mkdir ~/.xmonad && ln -s MONAD/xmonad.hs ~/.xmonad`
+### GNOME and XMonad
 
-4. Tell GNOME to use _xmonad_: `gconftool-2 -s /desktop/gnome/session/required_components/windowmanager xmonad --type string`
+XMonad can be used to replace the default window manager in GNOME
+(metacity). The steps are different depending on the Ubuntu
+distribution. Check the subfolders for instructions.
 
-(This can be undone by using the same command, but replacing _xmonad_ with _metacity_)
+## Troubleshooting
+
+If _xmonad_ won't start, try removing the `file
+~/.xmonad/xmonad-x86_64-linux`, which will be recreated.
