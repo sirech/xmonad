@@ -32,7 +32,7 @@ myManageHook = composeAll
                , resource  =? "gnome-terminal" --> doShift "2:terminal"
                , className =? "Eclipse" --> doShift ws_eclipse
                , className =? "Firefox" --> doShift "5:firefox"
-               , className =? "Google-chrome" --> doShift "6:chrome"
+               , (className =? "Google-chrome" <||> className =? "Chromium-browser") --> doShift "6:chrome"
                , className =? "Thunderbird" --> doShift "7:mail"
                , className =? "Pidgin" --> doShift ws_im
                , className =? "Gitk" --> doShift "9:gitk"
