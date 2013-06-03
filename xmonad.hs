@@ -12,6 +12,8 @@ import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Hooks.ManageDocks (avoidStruts)
 import XMonad.Actions.CopyWindow
 
+import XMonad.Actions.PhysicalScreens
+
 -- defaults on which we build
 -- use e.g. defaultConfig or gnomeConfig
 baseConf = gnomeConfig
@@ -53,12 +55,12 @@ pidginLayout = withIM ratio roster chatLayout where
     chatLayout      = Grid ||| simpleTabbed
     ratio           = (1 % 6)
     roster          = (Role "buddy_list")
-myLayoutHook =  avoidStruts $ eclipse $ pidgin $ normal 
+myLayoutHook =  avoidStruts $ eclipse $ pidgin $ normal
   where
-    normal = Full           
+    normal = Full
     eclipse = onWorkspace ws_eclipse Full
-    pidgin = onWorkspace ws_im pidginLayout 
-    
+    pidgin = onWorkspace ws_im pidginLayout
+
 
 -- KEYBINDINGS
 
@@ -80,6 +82,9 @@ myKeys =
   , ("C-S-<Right>", nextWS)
   , (win "S-<Left>", shiftToPrev)
   , (win "S-<Right>", shiftToNext)
+
+  , (win "w", onPrevNeighbour W.view)
+  , (win "e", onNextNeighbour W.view)
   ]
   -- ++
   -- [ (alt k, windows (W.view space))
