@@ -57,7 +57,7 @@ pidginLayout = withIM ratio roster chatLayout where
     roster          = (Role "buddy_list")
 myLayoutHook =  avoidStruts $ eclipse $ pidgin $ normal
   where
-    normal = basicLayout
+    normal = basicLayout ||| Full
     eclipse = onWorkspace ws_eclipse Full
     pidgin = onWorkspace ws_im pidginLayout
 
