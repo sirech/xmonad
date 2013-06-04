@@ -20,10 +20,10 @@ baseConf = gnomeConfig
 
 -- WORKSPACES
 
-ws_eclipse = "3:eclipse"
-ws_im = "8:pidgin"
+ws_eclipse = "7:eclipse"
+ws_im = "6:pidgin"
 
-myWorkspaces = ["1:emacs","2:terminal",ws_eclipse,"4:eclipse-2","5:firefox","6:chrome","7:mail",ws_im,"9:gitk","0:misc","-","="]
+myWorkspaces = ["1:emacs","2:terminal","3:chrome","4:firefox","5:mail",ws_im,ws_eclipse,"8:eclipse-2","9:gitk","0:misc","-","="]
 isFullscreen = (== "fullscreen")
 
 -- myManageHook :: ManageHook
@@ -33,9 +33,9 @@ myManageHook = composeAll
                , className =? "Emacs" --> doShift "1:emacs"
                , resource  =? "gnome-terminal" --> doShift "2:terminal"
                , className =? "Eclipse" --> doShift ws_eclipse
-               , className =? "Firefox" --> doShift "5:firefox"
-               , (className =? "Google-chrome" <||> className =? "Chromium-browser") --> doShift "6:chrome"
-               , className =? "Thunderbird" --> doShift "7:mail"
+               , className =? "Firefox" --> doShift "4:firefox"
+               , (className =? "Google-chrome" <||> className =? "Chromium-browser") --> doShift "3:chrome"
+               , className =? "Thunderbird" --> doShift "5:mail"
                , className =? "Pidgin" --> doShift ws_im
                , className =? "Gitk" --> doShift "9:gitk"
                , className =? "Xmessage"  --> doFloat
