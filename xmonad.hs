@@ -44,10 +44,10 @@ myManageHook = composeAll
 
 -- LAYOUTS
 
--- basicLayout = Tall nmaster delta ratio where
---     nmaster = 1
---     delta   = 3/100
---     ratio   = 1/2
+basicLayout = Tall nmaster delta ratio where
+    nmaster = 1
+    delta   = 3/100
+    ratio   = 1/2
 -- tallLayout = named "tall" $ basicLayout
 -- wideLayout = named "wide" $ Mirror basicLayout
 -- singleLayout = named "single" $ avoidStruts $ noBorders Full
@@ -57,7 +57,7 @@ pidginLayout = withIM ratio roster chatLayout where
     roster          = (Role "buddy_list")
 myLayoutHook =  avoidStruts $ eclipse $ pidgin $ normal
   where
-    normal = Full
+    normal = basicLayout
     eclipse = onWorkspace ws_eclipse Full
     pidgin = onWorkspace ws_im pidginLayout
 
