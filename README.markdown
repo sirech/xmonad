@@ -29,3 +29,8 @@ distribution. Check the subfolders for instructions.
 
 If _xmonad_ won't start, try removing the `file
 ~/.xmonad/xmonad-x86_64-linux`, which will be recreated.
+
+### Getting the information of a window
+
+Use the `xprop` tool to find the class name, window name or other
+properties.
