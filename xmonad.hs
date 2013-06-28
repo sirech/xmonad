@@ -33,8 +33,8 @@ myManageHook = composeAll
                , className =? "Emacs" --> doShift "1:emacs"
                , resource  =? "gnome-terminal" --> doShift "2:terminal"
                , className =? "Eclipse" --> doShift ws_eclipse
-               , className =? "Firefox" --> doShift "4:firefox"
-               , (className =? "Google-chrome" <||> className =? "Chromium-browser") --> doShift "3:chrome"
+               , (className =? "Firefox" <||> className =? "Chromium-browser") --> doShift "4:firefox"
+               , className =? "Google-chrome" --> doShift "3:chrome"
                , className =? "Thunderbird" --> doShift "5:mail"
                , className =? "Pidgin" --> doShift ws_im
                , className =? "Gitk" --> doShift "9:gitk"
