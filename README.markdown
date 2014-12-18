@@ -34,3 +34,9 @@ If _xmonad_ won't start, try removing the `file
 
 Use the `xprop` tool to find the class name, window name or other
 properties.
+
+### Monitors in wrong order
+
+It can happen that the monitors get listed in the incorrect order,
+and thus the mod-{w,e} keys will not work properly.
+[This will help](http://blog.ezyang.com/2011/06/multi-monitor-xmobar-placement-on-nome)
