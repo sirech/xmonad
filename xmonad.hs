@@ -83,8 +83,8 @@ myKeys =
   , (win "S-<Left>", shiftToPrev)
   , (win "S-<Right>", shiftToNext)
 
-  , (win "w", viewScreen 0)
-  , (win "e", viewScreen 1)
+  , (win "w", onPrevNeighbour W.view)
+  , (win "e", onNextNeighbour W.view)
   ]
   -- ++
   -- [ (alt k, windows (W.view space))
