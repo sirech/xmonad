@@ -31,20 +31,19 @@ myManageHook = composeAll
                  -- Don't tile GNOME Do
                [ resource  =? "Do"   --> doIgnore
                , className =? "Emacs" --> doShift "1:emacs"
-               , resource  =? "gnome-terminal" --> doShift "2:terminal"
+               , className  =? "Gnome-terminal" --> doShift "2:terminal"
                , className =? "Eclipse" --> doShift ws_eclipse
-               , (className =? "Firefox" <||> className =? "Chromium-browser") --> doShift "4:firefox"
-               , className =? "Google-chrome" --> doShift "3:chrome"
+               , (className =? "Firefox" <||> className =? "chromium-browser") --> doShift "4:firefox"
+               , className =? "google-chrome" --> doShift "3:chrome"
                , className =? "Thunderbird" --> doShift "5:mail"
-               , className =? "Pidgin" --> doShift ws_im
+               , (className =? "Pidgin" <||> className =? "hipchat") --> doShift ws_im
                , className =? "Gitk" --> doShift "9:gitk"
                , className =? "Xmessage"  --> doFloat
                ]
 
 
 -- LAYOUTS
-
-basicLayout = Tall nmaster delta ratio where
+tallLayout = Tall nmaster delta ratio where
     nmaster = 1
     delta   = 3/100
     ratio   = 1/2
@@ -57,7 +56,7 @@ pidginLayout = withIM ratio roster chatLayout where
     roster          = (Role "buddy_list")
 myLayoutHook =  avoidStruts $ eclipse $ pidgin $ normal
   where
-    normal = basicLayout ||| Full
+    normal = tallLayout ||| Mirror tallLayout ||| Full
     eclipse = onWorkspace ws_eclipse Full
     pidgin = onWorkspace ws_im pidginLayout
 
@@ -69,7 +68,6 @@ win key = "M-" ++ key
 
 myKeys =
   [ (win "<Space>", spawn "gnome-do")
-  , (win "l", spawn "xflock4")
   , (win "`", sendMessage NextLayout)
     -- , ("M-S-`", setLayout $ XMonad.layoutHook baseConf)
 
@@ -83,8 +81,8 @@ myKeys =
   , (win "S-<Left>", shiftToPrev)
   , (win "S-<Right>", shiftToNext)
 
-  , (win "e", viewScreen 0)
-  , (win "w", viewScreen 1)
+  , (win "w", viewScreen 0)
+  , (win "e", viewScreen 1)
   ]
   -- ++
   -- [ (alt k, windows (W.view space))
